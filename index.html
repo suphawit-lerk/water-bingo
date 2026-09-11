@@ -3,69 +3,608 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>คู่มือการนำเว็บแอปพลิเคชันบิงโกขึ้นเว็บไซต์เพื่อเล่นบนมือถือ</title>
+    <title>เกมส์บิงโกคำศัพท์ การบริหารจัดการน้ำ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        body { font-family: 'Sarabun', sans-serif; }
+        body {
+            font-family: 'Sarabun', sans-serif;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(59, 130, 246, 0.8); }
+        }
+        .bingo-board-glow {
+            animation: pulseGlow 3s infinite;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen p-4 sm:p-8">
-    <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-6 sm:p-10 border border-slate-200">
-        <h1 class="text-2xl sm:text-3xl font-black text-blue-700 mb-2">วิธีนำเว็บแอปพลิเคชันบิงโกไปใช้งานบนมือถือ</h1>
-        <p class="text-sm text-slate-500 mb-6">เนื่องจากโปรเจกต์นี้เป็นไฟล์ HTML เดี่ยว (Single File) ที่รวมทั้งโครงสร้าง โค้ดจัดแต่ง และระบบการทำงานไว้ครบถ้วน จึงทำให้สามารถนำไปเผยแพร่และเปิดเล่นบนมือถือได้ง่ายและฟรีครับ</p>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 min-h-screen text-slate-800 flex flex-col justify-between">
 
-        <div class="space-y-6">
-            <!-- Method 1 -->
-            <div class="bg-blue-50/70 p-5 rounded-2xl border border-blue-100">
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="bg-blue-600 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm">1</span>
-                    <h2 class="text-lg font-bold text-slate-900">วิธีที่ 1: Netlify Drop (ง่ายที่สุด ไม่ต้องสมัครสมาชิก)</h2>
+    <header class="bg-white/90 backdrop-blur-md border-b border-blue-100 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-600 text-white p-2.5 rounded-2xl shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
                 </div>
-                <p class="text-xs sm:text-sm text-slate-600 mb-3 leading-relaxed">
-                    เหมาะสำหรับต้องการใช้งานด่วนโดยไม่ต้องตั้งค่าระบบซับซ้อน:
-                </p>
-                <ol class="list-decimal list-inside text-xs sm:text-sm text-slate-700 space-y-1.5 ml-2">
-                    <li>บันทึกโค้ด HTML ของเกมนี้ลงในเครื่องคอมพิวเตอร์ของคุณ ตั้งชื่อไฟล์ว่า <code class="bg-white px-2 py-0.5 rounded border border-blue-200 font-mono text-blue-600">index.html</code></li>
-                    <li>เปิดเว็บไซต์ <a href="https://drop.netlify.com" target="_blank" class="text-blue-600 underline font-semibold">drop.netlify.com</a></li>
-                    <li>ลาก (Drag & Drop) ไฟล์ <code class="bg-white px-1 rounded">index.html</code> หรือโฟลเดอร์ที่เก็บไฟล์ ไปวางในหน้าเว็บ Netlify Drop</li>
-                    <li>ระบบจะสร้างลิงก์เว็บไซต์ให้ทันที (เช่น <code class="text-xs bg-white px-1 rounded">https://xxxx-xxxx.netlify.app</code>) คุณสามารถนำลิงก์นี้ไปเปิดบนมือถือหรือส่งให้ผู้อื่นเล่นได้เลย!</li>
-                </ol>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-bold text-slate-900 leading-tight">เกมส์บิงโกคำศัพท์ การบริหารจัดการน้ำ</h1>
+                    <p class="text-xs text-slate-500">เลือกคำศัพท์ 16 คำจากคลังคำศัพท์เพื่อจัดวางลงกระดาน 4x4 (ไม่มีช่อง Free)</p>
+                </div>
             </div>
-
-            <!-- Method 2 -->
-            <div class="bg-emerald-50/70 p-5 rounded-2xl border border-emerald-100">
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="bg-emerald-600 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm">2</span>
-                    <h2 class="text-lg font-bold text-slate-900">วิธีที่ 2: GitHub Pages (ฟรีและอยู่ได้ถาวร)</h2>
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="toggleAdminModal()" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold border border-slate-300 shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    จัดการคำศัพท์ (Admin)
+                </button>
+                <div id="game-status-badge" class="px-3.5 py-1.5 bg-amber-100 text-amber-800 rounded-full text-xs font-semibold border border-amber-200 shadow-sm">
+                    สถานะ: กำลังเตรียมกระดาน
                 </div>
-                <p class="text-xs sm:text-sm text-slate-600 mb-3 leading-relaxed">
-                    เหมาะสำหรับต้องการเก็บลิงก์ใช้งานระยะยาวและแก้ไขโค้ดได้ง่าย:
-                </p>
-                <ol class="list-decimal list-inside text-xs sm:text-sm text-slate-700 space-y-1.5 ml-2">
-                    <li>สมัครบัญชีฟรีที่ <a href="https://github.com" target="_blank" class="text-emerald-700 underline font-semibold">github.com</a></li>
-                    <li>สร้าง Repository ใหม่ (ตั้งชื่อ เช่น <code class="bg-white px-1 rounded">water-bingo</code>)</li>
-                    <li>อัปโหลดไฟล์ <code class="bg-white px-1 rounded">index.html</code> ขึ้นไปไว้ใน Repository นั้น</li>
-                    <li>ไปที่เมนู <strong>Settings</strong> &gt; <strong>Pages</strong> แล้วเลือก Branch เป็น <code class="bg-white px-1 rounded">main</code> (หรือ master) แล้วกด Save</li>
-                    <li>รอ 1-2 นาที ระบบจะแสดง URL เว็บไซต์ของคุณ สามารถคัดลอกลิงก์ไปเปิดในมือถือได้ทันที</li>
-                </ol>
             </div>
+        </div>
+    </header>
 
-            <!-- Method 3 -->
-            <div class="bg-amber-50/70 p-5 rounded-2xl border border-amber-100">
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="bg-amber-600 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm">3</span>
-                    <h2 class="text-lg font-bold text-slate-900">วิธีที่ 3: อัปโหลดผ่าน Hosting ฟรีอื่นๆ</h2>
+    <main id="main-container" class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start transition-all duration-300">
+        
+        <!-- Left Panel: Words Bank & Setup Controls -->
+        <div id="left-panel" class="lg:col-span-6 space-y-6 transition-all duration-300">
+            <div class="bg-white rounded-3xl shadow-xl p-6 border border-blue-100/80 transition-all duration-300 flex flex-col justify-between" style="min-height: 520px;">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
+                            <span class="bg-blue-600 text-white w-7 h-7 rounded-xl inline-flex items-center justify-center text-sm shadow-sm">1</span> 
+                            เลือกคำศัพท์ลงกระดาน
+                        </h2>
+                        <span id="word-count" class="text-xs font-bold px-3 py-1 bg-blue-50 text-blue-700 rounded-full border border-blue-200">0/16 คำ</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                        คลิกคำศัพท์จากคลังด้านล่างเพื่อเติมลงในตารางทีละช่อง หรือกดปุ่ม <strong>"สุ่มเลือก 16 คำอัตโนมัติ"</strong>
+                    </p>
+
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <button type="button" onclick="autoFillRandom16()" class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-2.5 px-4 rounded-xl text-xs transition shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            สุ่มเลือก 16 คำอัตโนมัติ
+                        </button>
+                        <button type="button" onclick="clearBoardSetup()" class="bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold py-2.5 px-4 rounded-xl text-xs border border-rose-200 transition cursor-pointer">
+                            ล้างกระดาน
+                        </button>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <div class="text-xs font-bold text-slate-700">คลังคำศัพท์ชลประทาน (<span id="total-vocab-count">50</span> คำ):</div>
+                            <span class="text-[10px] text-slate-400">คำที่เลือกแล้วจะถูกไฮไลต์</span>
+                        </div>
+                        <!-- Increased height and larger font for better readability -->
+                        <div id="master-words-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[340px] overflow-y-auto p-3.5 bg-slate-50 rounded-2xl border border-slate-200 shadow-inner">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
                 </div>
-                <p class="text-xs sm:text-sm text-slate-600 mb-2">
-                    คุณยังสามารถนำไฟล์ <code class="bg-white px-1 rounded">index.html</code> ไปอัปโหลดผ่าน File Manager ของโฮสติ้งสำเร็จรูปทั่วไป เช่น Vercel, Firebase Hosting หรือโฮสติ้งโรงเรียน/หน่วยงานของคุณได้ทันทีเช่นกันครับ
-                </p>
+
+                <div class="mt-4 pt-3">
+                    <button type="button" id="start-game-btn" onclick="startGame()" disabled class="w-full bg-slate-200 text-slate-400 font-bold py-3.5 px-4 rounded-2xl text-sm transition shadow-none cursor-not-allowed">
+                        กรอกคำศัพท์ให้ครบ (0/16)
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="mt-8 pt-6 border-t border-slate-200 text-center">
-            <p class="text-xs text-slate-500">💡 <strong>คำแนะนำเพิ่มเติม:</strong> เนื่องจากแอปพลิเคชันรองรับ Responsive เต็มรูปแบบ (Mobile-First) เมื่อเปิดผ่านมือถือ ปุ่มและตารางจะปรับขนาดพอดีหน้าจอสัมผัสโดยอัตโนมัติครับ</p>
+        <!-- Right Panel: 4x4 Bingo Board -->
+        <div id="right-panel" class="lg:col-span-6 flex flex-col items-center transition-all duration-300">
+            <div id="board-card-wrapper" class="w-full bg-white rounded-3xl shadow-xl p-6 border border-blue-100 flex flex-col items-center transition-all duration-300">
+                
+                <div class="w-full flex justify-between items-center mb-4">
+                    <div>
+                        <h2 id="board-title-text" class="text-base sm:text-lg font-bold text-slate-800">ตารางบิงโก 4x4 ของคุณ</h2>
+                        <p id="board-desc-text" class="text-xs text-slate-500">คลิกที่ช่องเพื่อทำเครื่องหมายกากบาท (X) หรือคืนคำศัพท์เข้าคลัง</p>
+                    </div>
+                    <div class="text-right flex items-center gap-3">
+                        <div id="reset-btn-container" class="hidden">
+                            <button type="button" onclick="resetGame()" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2 px-3 rounded-xl text-xs transition shadow-sm cursor-pointer flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                                เริ่มเกมใหม่
+                            </button>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-500 font-medium">เส้นบิงโก:</div>
+                            <div id="bingo-lines-count" class="text-xl sm:text-2xl font-black text-blue-600">0 แถว</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4x4 Grid Container (16 full slots) -->
+                <div id="bingo-grid" class="grid grid-cols-4 gap-2.5 w-full max-w-md aspect-square bg-slate-100 p-3.5 rounded-3xl border border-slate-200 shadow-inner transition-all duration-300">
+                    <!-- Populated by JS -->
+                </div>
+
+                <div id="board-helper-text" class="mt-4 text-xs text-center text-slate-600 bg-blue-50/80 px-4 py-3 rounded-2xl w-full border border-blue-100 leading-relaxed">
+                    💡 <strong>คำแนะนำ:</strong> เลือกคำศัพท์จากคลัง 50 คำด้านซ้าย เพื่อนำมาใส่ตารางทีละช่อง หรือกดปุ่มสุ่ม 16 คำอัตโนมัติ
+                </div>
+
+                <div class="w-full mt-6 pt-5 border-t border-slate-100">
+                    <div class="text-xs font-bold text-slate-700 mb-2.5 text-center">ตัวอย่างรูปแบบการบิงโก (Winning Patterns):</div>
+                    <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                        <!-- Pattern 1: Row -->
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex flex-col items-center justify-center">
+                            <div class="grid grid-cols-4 gap-0.5 w-10 h-10 mb-1 bg-slate-200 p-0.5 rounded">
+                                <div class="bg-blue-600 rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div>
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                            </div>
+                            <span class="text-[10px] font-medium text-slate-600">แนวนอน</span>
+                        </div>
+                        <!-- Pattern 2: Column -->
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex flex-col items-center justify-center">
+                            <div class="grid grid-cols-4 gap-0.5 w-10 h-10 mb-1 bg-slate-200 p-0.5 rounded">
+                                <div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                            </div>
+                            <span class="text-[10px] font-medium text-slate-600">แนวตั้ง</span>
+                        </div>
+                        <!-- Pattern 3: Diagonal 1 -->
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex flex-col items-center justify-center">
+                            <div class="grid grid-cols-4 gap-0.5 w-10 h-10 mb-1 bg-slate-200 p-0.5 rounded">
+                                <div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div>
+                            </div>
+                            <span class="text-[10px] font-medium text-slate-600">แนวทแยงซ้าย</span>
+                        </div>
+                        <!-- Pattern 4: Diagonal 2 -->
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex flex-col items-center justify-center">
+                            <div class="grid grid-cols-4 gap-0.5 w-10 h-10 mb-1 bg-slate-200 p-0.5 rounded">
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div>
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                            </div>
+                            <span class="text-[10px] font-medium text-slate-600">แนวทแยงขวา</span>
+                        </div>
+                        <!-- Pattern 5: 4 Corners -->
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex flex-col items-center justify-center col-span-2 sm:col-span-2">
+                            <div class="grid grid-cols-4 gap-0.5 w-10 h-10 mb-1 bg-slate-200 p-0.5 rounded">
+                                <div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div>
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div>
+                                <div class="bg-blue-600 rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-white rounded-[1px]"></div><div class="bg-blue-600 rounded-[1px]"></div>
+                            </div>
+                            <span class="text-[10px] font-medium text-slate-600">มุม 4 มุม (4 Corners)</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <div id="admin-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full p-6 sm:p-8 transform scale-95 transition-transform duration-300 border border-slate-200 relative overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="flex justify-between items-center pb-4 border-b border-slate-100 mb-4">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">จัดการคลังคำศัพท์ (Admin Panel)</h3>
+                    <p class="text-xs text-slate-500">เพิ่มหรือลบคำศัพท์ในระบบ</p>
+                </div>
+                <button type="button" onclick="toggleAdminModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition cursor-pointer">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Add Word Form -->
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-4">
+                <label class="block text-xs font-bold text-slate-700 mb-1.5">เพิ่มคำศัพท์ใหม่:</label>
+                <div class="flex gap-2">
+                    <input type="text" id="new-word-input" placeholder="พิมพ์คำศัพท์ชลประทานที่ต้องการเพิ่ม..." class="flex-1 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                    <button type="button" onclick="addNewWord()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-xs transition shadow-sm cursor-pointer">
+                        เพิ่มคำ
+                    </button>
+                </div>
+            </div>
+
+            <!-- List of words with delete option -->
+            <div class="flex-1 overflow-y-auto space-y-1.5 pr-1 min-h-[200px]" id="admin-words-list">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 flex justify-between items-center mt-4">
+                <button type="button" onclick="resetDefaultVocabulary()" class="text-xs text-rose-600 hover:text-rose-700 font-medium underline cursor-pointer">
+                    รีเซ็ตคำศัพท์ทั้งหมดเป็นค่าเริ่มต้น (Default 50 คำ)
+                </button>
+                <button type="button" onclick="toggleAdminModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold px-5 py-2.5 rounded-xl text-xs transition cursor-pointer">
+                    เสร็จสิ้น
+                </button>
+            </div>
         </div>
     </div>
+
+    <div id="win-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 text-center transform scale-95 transition-transform duration-300 border border-emerald-100 relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-100 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -left-12 w-32 h-32 bg-blue-100 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner text-3xl">
+                🎉
+            </div>
+            
+            <h3 class="text-2xl font-black text-slate-900 mb-2">ยินดีด้วย! BINGO!</h3>
+            <p class="text-slate-600 text-sm mb-6 leading-relaxed">ยอดเยี่ยมมากครับ คุณทำเครื่องหมายครบตามเงื่อนไขบิงโกเรียบร้อยแล้ว คุณชนะแล้ว!</p>
+            
+            <div class="flex gap-3">
+                <button type="button" onclick="closeWinModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 px-4 rounded-xl text-sm transition cursor-pointer">
+                    ดูตารางต่อ
+                </button>
+                <button type="button" onclick="resetGame()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition shadow-lg shadow-emerald-600/30 cursor-pointer">
+                    เริ่มเกมใหม่
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-slate-200 py-4 mt-8 text-center text-xs text-slate-500">
+        <p>เว็บแอปพลิเคชันเกมส์บิงโกคำศัพท์ การบริหารจัดการน้ำ • ออกแบบสำหรับกิจกรรมการเรียนรู้</p>
+    </footer>
+
+    <script>
+        const defaultWords50 = [
+            "กลุ่มผู้ใช้น้ำชลประทาน", "การจัดสรรน้ำตามรอบเวร", "การบริหารน้ำมาตาลเพื่อการเกษดร", "การพยากรณ์เชิงตัวเลข", 
+            "เกณฑ์ฝนเตือนภัยล่วงหน้า", "คลองส่งน้ำสายใหญ่", "ความจุลำน้ำปลอดภัย", "จุดรับน้ำเข้าคลองส่ง", 
+            "น้ำต้นทุนชลประทาน", "น้ำล้นตลิ่ง", "แบบจำลองการไหลของน้ำ", "แบบจำลองฝน-น้ำท่า", 
+            "ประสิทธิภาพการส่งน้ำ", "ปริมาณน้ำต้นทุน", "ปริมาณฝนสะสม", "ปัญหาปลายคลอง", 
+            "ฝ่ายชะลอน้ำชั่วคราว", "พื้นที่รับประโยชน์ชลประทาน", "พื้นที่อาศัยน้ำฝน", "ลุ่มน้ำ", 
+            "เวลาเดินทางของมวลน้ำ", "สมดุลน้ำ", "เส้นเกณฑ์ปฏิบัติการอ่างเก็บน้ำ", "เส้นชั้นความสูง", 
+            "แหล่งน้ำขนาดเล็กระดับไร่นา", "การขาดแคลนน้ำนอกเขตบริการ", "การจัดจราจรทางน้ำ", "การแจ้งเตือนเฉพาะกลุ่มเปราะบาง", 
+            "การชดเชยการใช้ทุ่งหน่วงน้ำ", "การบริหารจัดการน้ำแบบบูรณาการ", "การประเมินความเปราะบางเชิงพื้นที่", "การมีส่วนร่วมของภาคประชาสังคม", 
+            "การสื่อสารความเสี่ยงที่เข้าใจง่าย", "เกณฑ์ระดับน้ำเดือนภัย", "แก้มลิงธรรมชาติ", "ข้อตกลงจัดสรรน้ำ", 
+            "คณะกรรมการลุ่มน้ำ", "ความแห้งแล้งเชิงอุทกวิทยา", "คันกั้นน้ำชั่วคราว", "จุดเสี่ยงน้ำท่วม", 
+            "ทางผันน้ำ", "ทางฝันน้ำเลี่ยงเมือง", "ทุ่งรับน้ำหลาก", "ปฏิทินการเพาะปลูก", 
+            "ผังน้ำ", "แผนบรรเทาอุทกภัยแบบกลุ่มลุ่มน้ำ", "พนังกั้นน้ำ", "พื้นที่ชุ่มน้ำชะลอน้ำหลาก", 
+            "พื้นที่หน่วงน้ำ", "ระบบโทรมาตร"
+        ];
+
+        let masterWords = JSON.parse(localStorage.getItem('irrigation_bingo_vocab')) || [...defaultWords50];
+        let boardCells = Array(16).fill(null);
+        let cellMarks = Array(16).fill(false);
+        let gameState = 'SETUP'; // SETUP, PLAYING, WON
+
+        const masterWordsContainer = document.getElementById('master-words-container');
+        const totalVocabCount = document.getElementById('total-vocab-count');
+        const wordCountBadge = document.getElementById('word-count');
+        const startGameBtn = document.getElementById('start-game-btn');
+        const leftPanel = document.getElementById('left-panel');
+        const rightPanel = document.getElementById('right-panel');
+        const boardCardWrapper = document.getElementById('board-card-wrapper');
+        const gameStatusBadge = document.getElementById('game-status-badge');
+        const bingoGrid = document.getElementById('bingo-grid');
+        const bingoLinesCountDiv = document.getElementById('bingo-lines-count');
+        const boardHelperText = document.getElementById('board-helper-text');
+        const resetBtnContainer = document.getElementById('reset-btn-container');
+        const boardTitleText = document.getElementById('board-title-text');
+        const boardDescText = document.getElementById('board-desc-text');
+        const winModal = document.getElementById('win-modal');
+        const adminModal = document.getElementById('admin-modal');
+        const adminWordsList = document.getElementById('admin-words-list');
+        const newWordInput = document.getElementById('new-word-input');
+
+        function saveVocabulary() {
+            localStorage.setItem('irrigation_bingo_vocab', JSON.stringify(masterWords));
+            totalVocabCount.innerText = masterWords.length;
+        }
+
+        function renderMasterWordsList() {
+            totalVocabCount.innerText = masterWords.length;
+            masterWordsContainer.innerHTML = '';
+            masterWords.forEach((word) => {
+                const isSelected = boardCells.includes(word);
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                // Increased padding and font size for better readability and touch targets
+                btn.className = `px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition flex items-center justify-between gap-1.5 border cursor-pointer `;
+                
+                if (isSelected) {
+                    btn.className += ` bg-blue-600 text-white border-blue-700 shadow-sm opacity-90`;
+                    btn.innerHTML = `<span class="text-left leading-snug">${word}</span> <span class="text-[10px] bg-blue-800 px-1.5 py-0.5 rounded-md shrink-0">เลือกแล้ว</span>`;
+                } else {
+                    btn.className += ` bg-white hover:bg-blue-50 text-slate-700 border-slate-200`;
+                    btn.innerHTML = `<span class="text-left leading-snug">${word}</span> <span class="text-slate-400 text-sm shrink-0">+</span>`;
+                }
+
+                btn.onclick = () => {
+                    if (gameState !== 'SETUP') return;
+                    if (isSelected) {
+                        const idx = boardCells.indexOf(word);
+                        if (idx !== -1) boardCells[idx] = null;
+                    } else {
+                        const emptyIdx = boardCells.findIndex(c => c === null);
+                        if (emptyIdx !== -1) {
+                            boardCells[emptyIdx] = word;
+                        }
+                    }
+                    renderMasterWordsList();
+                    renderBoard();
+                    checkSetupCompletion();
+                };
+                masterWordsContainer.appendChild(btn);
+            });
+        }
+
+        function renderAdminWordsList() {
+            adminWordsList.innerHTML = '';
+            masterWords.forEach((word, index) => {
+                const row = document.createElement('div');
+                row.className = `flex items-center justify-between p-2.5 rounded-xl border border-slate-200 bg-white shadow-sm text-xs`;
+                row.innerHTML = `
+                    <span class="font-medium text-slate-800">${index + 1}. ${word}</span>
+                    <button type="button" onclick="deleteWord(${index})" class="bg-rose-50 hover:bg-rose-100 text-rose-600 font-semibold px-2.5 py-1 rounded-lg border border-rose-200 transition cursor-pointer">
+                        ลบ
+                    </button>
+                `;
+                adminWordsList.appendChild(row);
+            });
+        }
+
+        function addNewWord() {
+            const val = newWordInput.value.trim();
+            if (!val) return;
+            if (masterWords.includes(val)) {
+                alert('คำนี้มีอยู่ในคลังคำศัพท์แล้ว');
+                return;
+            }
+            masterWords.push(val);
+            newWordInput.value = '';
+            saveVocabulary();
+            renderMasterWordsList();
+            renderAdminWordsList();
+        }
+
+        function deleteWord(index) {
+            if (masterWords.length <= 16) {
+                alert('คลังคำศัพท์ต้องมีอย่างน้อย 16 คำเพื่อให้จัดวางลงกระดาน 4x4 ได้ครบ');
+                return;
+            }
+            const removedWord = masterWords[index];
+            masterWords.splice(index, 1);
+            
+            const boardIdx = boardCells.indexOf(removedWord);
+            if (boardIdx !== -1) {
+                boardCells[boardIdx] = null;
+            }
+
+            saveVocabulary();
+            renderMasterWordsList();
+            renderAdminWordsList();
+            renderBoard();
+            checkSetupCompletion();
+        }
+
+        function resetDefaultVocabulary() {
+            if (confirm('คุณต้องการรีเซ็ตคำศัพท์ทั้งหมดกลับเป็นค่าเริ่มต้น 50 คำหรือไม่?')) {
+                masterWords = [...defaultWords50];
+                boardCells = Array(16).fill(null);
+                cellMarks = Array(16).fill(false);
+                saveVocabulary();
+                renderMasterWordsList();
+                renderAdminWordsList();
+                renderBoard();
+                checkSetupCompletion();
+            }
+        }
+
+        function toggleAdminModal() {
+            if (adminModal.classList.contains('hidden')) {
+                renderAdminWordsList();
+                adminModal.classList.remove('hidden');
+                setTimeout(() => adminModal.classList.remove('opacity-0'), 10);
+            } else {
+                adminModal.classList.add('opacity-0');
+                setTimeout(() => adminModal.classList.add('hidden'), 300);
+            }
+        }
+
+        function renderBoard() {
+            bingoGrid.innerHTML = '';
+            boardCells.forEach((cellText, index) => {
+                const cell = document.createElement('div');
+                
+                if (gameState === 'PLAYING' || gameState === 'WON') {
+                    cell.className = `aspect-square rounded-2xl p-2.5 flex flex-col items-center justify-center text-center font-bold text-sm sm:text-base transition-all relative select-none cursor-pointer border shadow-md `;
+                } else {
+                    cell.className = `aspect-square rounded-2xl p-1.5 flex flex-col items-center justify-center text-center font-semibold text-xs sm:text-sm transition-all relative select-none cursor-pointer border shadow-sm `;
+                }
+                
+                if (cellMarks[index]) {
+                    cell.className += ` bg-blue-600 text-white border-blue-700 shadow-inner`;
+                } else {
+                    cell.className += ` bg-white hover:bg-blue-50 text-slate-700 border-slate-200`;
+                }
+
+                cell.innerHTML = `
+                    <span class="line-clamp-3 px-1 leading-tight ${cellMarks[index] ? 'line-through opacity-90' : ''}">${cellText || `<span class="text-slate-300 italic font-normal text-[11px]">ช่องที่ ${index + 1}</span>`}</span>
+                    ${cellMarks[index] ? '<span class="absolute inset-0 flex items-center justify-center text-blue-400 font-black text-6xl opacity-30 pointer-events-none">X</span>' : ''}
+                `;
+
+                cell.onclick = () => handleCellClick(index);
+                bingoGrid.appendChild(cell);
+            });
+
+            updateBingoCount();
+        }
+
+        function handleCellClick(index) {
+            if (gameState === 'SETUP') {
+                if (boardCells[index]) {
+                    boardCells[index] = null;
+                    renderMasterWordsList();
+                    renderBoard();
+                    checkSetupCompletion();
+                }
+            } else if (gameState === 'PLAYING' || gameState === 'WON') {
+                if (boardCells[index]) {
+                    cellMarks[index] = !cellMarks[index];
+                    renderBoard();
+                    checkBingoWin();
+                }
+            }
+        }
+
+        function autoFillRandom16() {
+            if (gameState !== 'SETUP') return;
+            const shuffled = [...masterWords].sort(() => 0.5 - Math.random());
+            const selected16 = shuffled.slice(0, 16);
+
+            for (let i = 0; i < 16; i++) {
+                boardCells[i] = selected16[i];
+            }
+            renderMasterWordsList();
+            renderBoard();
+            checkSetupCompletion();
+        }
+
+        function clearBoardSetup() {
+            if (gameState !== 'SETUP') return;
+            boardCells = Array(16).fill(null);
+            cellMarks = Array(16).fill(false);
+            renderMasterWordsList();
+            renderBoard();
+            checkSetupCompletion();
+        }
+
+        function checkSetupCompletion() {
+            const filledCount = boardCells.filter(c => c !== null).length;
+            wordCountBadge.innerText = `${filledCount}/16 คำ`;
+
+            if (filledCount === 16) {
+                startGameBtn.disabled = false;
+                startGameBtn.className = "w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-3.5 px-4 rounded-2xl text-sm transition shadow-lg shadow-blue-600/30 cursor-pointer";
+                startGameBtn.innerText = "เริ่มเล่นเกมบิงโกทันที!";
+            } else {
+                startGameBtn.disabled = true;
+                startGameBtn.className = "w-full bg-slate-200 text-slate-400 font-bold py-3.5 px-4 rounded-2xl text-sm transition shadow-none cursor-not-allowed";
+                startGameBtn.innerText = `กรอกคำศัพท์ให้ครบ (${filledCount}/16)`;
+            }
+        }
+
+        function startGame() {
+            const filledCount = boardCells.filter(c => c !== null).length;
+            if (filledCount < 16) return;
+
+            gameState = 'PLAYING';
+
+            leftPanel.classList.add('hidden');
+            rightPanel.className = "col-span-12 flex flex-col items-center w-full max-w-3xl mx-auto transition-all duration-300";
+            boardCardWrapper.className = "w-full bg-white rounded-3xl shadow-2xl p-8 border border-blue-200 flex flex-col items-center bingo-board-glow transition-all duration-300";
+            
+            gameStatusBadge.innerText = "สถานะ: กำลังเล่นเกม (Playing)";
+            gameStatusBadge.className = "px-3.5 py-1.5 bg-emerald-100 text-emerald-800 rounded-full text-xs font-semibold border border-emerald-200 shadow-sm";
+            
+            boardTitleText.innerText = "ตารางบิงโกคำศัพท์ การบริหารจัดการน้ำ (กำลังเล่น)";
+            boardDescText.innerText = "คลิกที่ช่องคำศัพท์เมื่อต้องการกากบาท (X)";
+            boardHelperText.innerHTML = "🎯 <strong>วิธีเล่น:</strong> คลิกที่ช่องในตารางเพื่อทำเครื่องหมายกากบาท (X) เมื่อครบแถวแนวนอน แนวตั้ง แนวทแยง หรือมุม 4 มุม จะถือว่าชนะเกมทันที";
+            
+            resetBtnContainer.classList.remove('hidden');
+
+            bingoGrid.className = "grid grid-cols-4 gap-3.5 w-full max-w-xl aspect-square bg-slate-100 p-4 rounded-3xl border border-slate-200 shadow-inner transition-all duration-300";
+
+            renderBoard();
+        }
+
+        function updateBingoCount() {
+            const lines = [
+                // Rows
+                [0,1,2,3], [4,5,6,7], [8,9,10,11], [12,13,14,15],
+                // Columns
+                [0,4,8,12], [1,5,9,13], [2,6,10,14], [3,7,11,15],
+                // Diagonals
+                [0,5,10,15], [3,6,9,12],
+                // 4 Corners
+                [0, 3, 12, 15]
+            ];
+
+            let completedLines = 0;
+            lines.forEach(line => {
+                if (line.every(idx => cellMarks[idx])) {
+                    completedLines++;
+                }
+            });
+
+            bingoLinesCountDiv.innerText = `${completedLines} แถว`;
+            return completedLines;
+        }
+
+        function checkBingoWin() {
+            const completedLines = updateBingoCount();
+
+            if (completedLines > 0 && gameState === 'PLAYING') {
+                gameState = 'WON';
+                gameStatusBadge.innerText = "สถานะ: ชนะแล้ว! (BINGO!)";
+                gameStatusBadge.className = "px-3.5 py-1.5 bg-emerald-600 text-white rounded-full text-xs font-semibold shadow-md";
+                
+                triggerConfetti();
+
+                setTimeout(() => {
+                    winModal.classList.remove('hidden');
+                    setTimeout(() => winModal.classList.remove('opacity-0'), 10);
+                }, 400);
+            }
+        }
+
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 150,
+                    spread: 90,
+                    origin: { y: 0.6 }
+                });
+            }
+        }
+
+        function closeWinModal() {
+            winModal.classList.add('opacity-0');
+            setTimeout(() => winModal.classList.add('hidden'), 300);
+        }
+
+        function resetGame() {
+            winModal.classList.add('opacity-0');
+            setTimeout(() => winModal.classList.add('hidden'), 300);
+
+            gameState = 'SETUP';
+            boardCells = Array(16).fill(null);
+            cellMarks = Array(16).fill(false);
+
+            leftPanel.classList.remove('hidden');
+            rightPanel.className = "lg:col-span-6 flex flex-col items-center transition-all duration-300";
+            boardCardWrapper.className = "w-full bg-white rounded-3xl shadow-xl p-6 border border-blue-100 flex flex-col items-center transition-all duration-300";
+            
+            gameStatusBadge.innerText = "สถานะ: กำลังเตรียมกระดาน";
+            gameStatusBadge.className = "px-3.5 py-1.5 bg-amber-100 text-amber-800 rounded-full text-xs font-semibold border border-amber-200 shadow-sm";
+            
+            boardTitleText.innerText = "ตารางบิงโก 4x4 ของคุณ";
+            boardDescText.innerText = "คลิกที่ช่องเพื่อทำเครื่องหมายกากบาท (X) หรือคืนคำศัพท์เข้าคลัง";
+            boardHelperText.innerHTML = `💡 <strong>คำแนะนำ:</strong> เลือกคำศัพท์จากคลังคำศัพท์ด้านซ้าย เพื่อนำมาใส่ตารางทีละช่อง หรือกดปุ่มสุ่ม 16 คำอัตโนมัติ`;
+            
+            resetBtnContainer.classList.add('hidden');
+
+            bingoGrid.className = "grid grid-cols-4 gap-2.5 w-full max-w-md aspect-square bg-slate-100 p-3.5 rounded-3xl border border-slate-200 shadow-inner transition-all duration-300";
+
+            renderMasterWordsList();
+            renderBoard();
+            checkSetupCompletion();
+        }
+
+        window.onload = () => {
+            renderMasterWordsList();
+            renderBoard();
+            checkSetupCompletion();
+        };
+    </script>
+
 </body>
 </html>
