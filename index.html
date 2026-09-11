@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คู่มือการนำเว็บแอปพลิเคชันบิงโกขึ้นเว็บไซต์เพื่อเล่นบนมือถือ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Sarabun', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl p-6 sm:p-10 border border-slate-200">
+        <h1 class="text-2xl sm:text-3xl font-black text-blue-700 mb-2">วิธีนำเว็บแอปพลิเคชันบิงโกไปใช้งานบนมือถือ</h1>
+        <p class="text-sm text-slate-500 mb-6">เนื่องจากโปรเจกต์นี้เป็นไฟล์ HTML เดี่ยว (Single File) ที่รวมทั้งโครงสร้าง โค้ดจัดแต่ง และระบบการทำงานไว้ครบถ้วน จึงทำให้สามารถนำไปเผยแพร่และเปิดเล่นบนมือถือได้ง่ายและฟรีครับ</p>
+
+        <div class="space-y-6">
+            <!-- Method 1 -->
+            <div class="bg-blue-50/70 p-5 rounded-2xl border border-blue-100">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm">1</span>
+                    <h2 class="text-lg font-bold text-slate-900">วิธีที่ 1: Netlify Drop (ง่ายที่สุด ไม่ต้องสมัครสมาชิก)</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 mb-3 leading-relaxed">
+                    เหมาะสำหรับต้องการใช้งานด่วนโดยไม่ต้องตั้งค่าระบบซับซ้อน:
+                </p>
+                <ol class="list-decimal list-inside text-xs sm:text-sm text-slate-700 space-y-1.5 ml-2">
+                    <li>บันทึกโค้ด HTML ของเกมนี้ลงในเครื่องคอมพิวเตอร์ของคุณ ตั้งชื่อไฟล์ว่า <code class="bg-white px-2 py-0.5 rounded border border-blue-200 font-mono text-blue-600">index.html</code></li>
+                    <li>เปิดเว็บไซต์ <a href="https://drop.netlify.com" target="_blank" class="text-blue-600 underline font-semibold">drop.netlify.com</a></li>
+                    <li>ลาก (Drag & Drop) ไฟล์ <code class="bg-white px-1 rounded">index.html</code> หรือโฟลเดอร์ที่เก็บไฟล์ ไปวางในหน้าเว็บ Netlify Drop</li>
+                    <li>ระบบจะสร้างลิงก์เว็บไซต์ให้ทันที (เช่น <code class="text-xs bg-white px-1 rounded">https://xxxx-xxxx.netlify.app</code>) คุณสามารถนำลิงก์นี้ไปเปิดบนมือถือหรือส่งให้ผู้อื่นเล่นได้เลย!</li>
+                </ol>
+            </div>
+
+            <!-- Method 2 -->
+            <div class="bg-emerald-50/70 p-5 rounded-2xl border border-emerald-100">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-emerald-600 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm">2</span>
+                    <h2 class="text-lg font-bold text-slate-900">วิธีที่ 2: GitHub Pages (ฟรีและอยู่ได้ถาวร)</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 mb-3 leading-relaxed">
+                    เหมาะสำหรับต้องการเก็บลิงก์ใช้งานระยะยาวและแก้ไขโค้ดได้ง่าย:
+                </p>
+                <ol class="list-decimal list-inside text-xs sm:text-sm text-slate-700 space-y-1.5 ml-2">
+                    <li>สมัครบัญชีฟรีที่ <a href="https://github.com" target="_blank" class="text-emerald-700 underline font-semibold">github.com</a></li>
+                    <li>สร้าง Repository ใหม่ (ตั้งชื่อ เช่น <code class="bg-white px-1 rounded">water-bingo</code>)</li>
+                    <li>อัปโหลดไฟล์ <code class="bg-white px-1 rounded">index.html</code> ขึ้นไปไว้ใน Repository นั้น</li>
+                    <li>ไปที่เมนู <strong>Settings</strong> &gt; <strong>Pages</strong> แล้วเลือก Branch เป็น <code class="bg-white px-1 rounded">main</code> (หรือ master) แล้วกด Save</li>
+                    <li>รอ 1-2 นาที ระบบจะแสดง URL เว็บไซต์ของคุณ สามารถคัดลอกลิงก์ไปเปิดในมือถือได้ทันที</li>
+                </ol>
+            </div>
+
+            <!-- Method 3 -->
+            <div class="bg-amber-50/70 p-5 rounded-2xl border border-amber-100">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-amber-600 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm">3</span>
+                    <h2 class="text-lg font-bold text-slate-900">วิธีที่ 3: อัปโหลดผ่าน Hosting ฟรีอื่นๆ</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-600 mb-2">
+                    คุณยังสามารถนำไฟล์ <code class="bg-white px-1 rounded">index.html</code> ไปอัปโหลดผ่าน File Manager ของโฮสติ้งสำเร็จรูปทั่วไป เช่น Vercel, Firebase Hosting หรือโฮสติ้งโรงเรียน/หน่วยงานของคุณได้ทันทีเช่นกันครับ
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-slate-200 text-center">
+            <p class="text-xs text-slate-500">💡 <strong>คำแนะนำเพิ่มเติม:</strong> เนื่องจากแอปพลิเคชันรองรับ Responsive เต็มรูปแบบ (Mobile-First) เมื่อเปิดผ่านมือถือ ปุ่มและตารางจะปรับขนาดพอดีหน้าจอสัมผัสโดยอัตโนมัติครับ</p>
+        </div>
+    </div>
+</body>
+</html>
